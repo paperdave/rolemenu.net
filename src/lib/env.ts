@@ -8,10 +8,6 @@ function envNonEmptyString(name: string) {
 	return value;
 }
 
-export const REALM_APPID = envNonEmptyString('REALM_APPID');
-export const REALM_TOKEN = envNonEmptyString('REALM_TOKEN');
-export const MONGO_DB = envNonEmptyString('MONGO_DB');
-
 export const HOST = envNonEmptyString('HOST');
 export const DISCORD_API_URL = envNonEmptyString('DISCORD_API_URL');
 export const DISCORD_CLIENT_ID = envNonEmptyString('DISCORD_CLIENT_ID');

@@ -1,0 +1,35 @@
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["dataproxy", "extendedIndexes", "referentialIntegrity"]
+}
+
+datasource db {
+  provider = "mysql"
+  url = env("DATABASE_URL")
+  referentialIntegrity = "prisma"
+}
+
+model RoleMenu {
+  id          String @id @unique // message id
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  channel     String
+  guild       String
+  placeholder String? 
+  multi       Boolean  @default(false)
+  message     String @default("Role Menu")
+  style       String @default("default") 
+  roles       Json @default("[]")
+
+  @@index([guild])
+}
+
+// model RoleMenuRole {
+//   id          String @id @unique @default(uuid())
+//   role        String
+//   label       String?
+//   description String?
+//   emoji       String?
+//   roleMenu    RoleMenu @relation(fields: [roleMenuId], references: [id])
+//   roleMenuId  String
+// }

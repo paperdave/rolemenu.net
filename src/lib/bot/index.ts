@@ -1,6 +1,4 @@
-import { getDatabase } from '$lib/db';
 import { DISCORD_BOT_TOKEN, HOST } from '$lib/env';
-import { RoleMenu } from '$lib/structures/RoleMenu';
 import { Client, TextChannel } from 'discord.js';
 import { discordCommands } from './commands';
 

@@ -46,9 +46,25 @@ export const get: RequestHandler = async ({ request }) => {
 		})
 	);
 
+	const sortedData = mappedData.sort((a, b) => {
+		if (a.hasBot && !b.hasBot) {
+			return -1;
+		} else if (!a.hasBot && b.hasBot) {
+			return 1;
+		} else if (a.hasManageServer && !b.hasManageServer) {
+			return -1;
+		} else if (!a.hasManageServer && b.hasManageServer) {
+			return 1;
+		} else {
+			return a.name.localeCompare(b.name);
+		}
+	});
+
 	return {
 		status: 200,
-		body: mappedData
+		body: {
+			data: sortedData
+		}
 	};
 };
 
