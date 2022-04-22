@@ -1,77 +1,85 @@
 import { browser } from '$app/env';
-import type { RMGuildList } from 'src/routes/api/user/guilds';
-import type { RoleMenuFullData, RoleMenuList } from 'src/routes/api/[guild]/info';
-import { get } from 'svelte/store';
+import type { GetUserGuilds } from 'src/routes/api/user/guilds';
+import type { GetGuildInfo, GuildInfo } from 'src/routes/api/[guild]/info';
+import { RESTClient } from './api-client-base';
+import type { RoleMenu, GuildPreview } from './api-types';
 import { CacheMap } from './cache-map';
-import { session } from './session';
 
-export type URLSearchParamsOptions = ConstructorParameters<typeof URLSearchParams>[0];
+const globalCache = new CacheMap<string, unknown>();
 
-export const guildListCache = new CacheMap<string, RMGuildList | Promise<RMGuildList>>();
-export const roleMenuListCache = new CacheMap<string, RoleMenuList | Promise<RoleMenuList>>();
+export class RoleMenuClient extends RESTClient {
+	#cache = browser ? globalCache : new Map();
 
-export async function apiGet<R>(url: string): Promise<{ data: R }> {
-	if (!browser) {
-		return {};
-	}
-	return fetch(`/api${url}`, {
-		headers: {
-			Authorization: `Bearer ${get(session).token.access}`
+	async getUserGuilds(): Promise<GuildPreview[]> {
+		if (!this.#cache.has('guilds')) {
+			this.#cache.set(
+				'guilds',
+				this.get<GetUserGuilds>('/user/guilds').then((res) => {
+					this.#cache.set('guilds', res.data);
+					return res.data;
+				})
+			);
 		}
-	}).then((res) => res.json());
-}
-
-export async function apiPatch<R>(url: string, data: unknown): Promise<{ data: R }> {
-	if (!browser) {
-		return {};
+		return this.#cache.get('guilds') as Promise<GuildPreview[]>;
 	}
-	return fetch(`/api${url}`, {
-		headers: {
-			Authorization: `Bearer ${get(session).token.access}`,
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify(data),
-		method: 'PATCH'
-	}).then((res) => res.json());
-}
 
-export async function apiFetchGuildList() {
-	if (!guildListCache.has('guilds')) {
-		guildListCache.set(
-			'guilds',
-			(async () => {
-				const { data } = await apiGet<RMGuildList>('/user/guilds');
-				console.log(data);
-				guildListCache.set('guilds', data);
-				return data;
-			})()
-		);
+	async getGuildInfo(guildId: string): Promise<GuildInfo> {
+		if (!this.#cache.has(guildId)) {
+			this.#cache.set(
+				guildId,
+				this.get<GetGuildInfo>(`/${guildId}/info`).then((res) => {
+					this.#cache.set(guildId, res.data);
+					return res.data;
+				})
+			);
+		}
+		return this.#cache.get(guildId) as Promise<GuildInfo>;
 	}
-	return guildListCache.get('guilds');
-}
 
-export async function apiFetchRoleMenuList(guildId: string) {
-	if (!roleMenuListCache.has(guildId)) {
-		roleMenuListCache.set(
-			guildId,
-			(async () => {
-				const { data } = await apiGet<RoleMenuList>(`/${guildId}/info`, { guildId });
-				roleMenuListCache.set(guildId, data);
-				return data;
-			})()
-		);
+	async getGuild(guildId: string) {
+		return (await this.getGuildInfo(guildId)).guild;
 	}
-	return roleMenuListCache.get(guildId);
+
+	async getRoleMenuList(guildId: string) {
+		return (await this.getGuildInfo(guildId)).roleMenus;
+	}
+
+	async getRoleMenu(guildId: string, roleId: string) {
+		return (await this.getRoleMenuList(guildId)).find((roleMenu) => roleMenu.id === roleId);
+	}
+
+	getCachedGuildList() {
+		return (this.#cache.get('guilds') as GuildPreview[]) ?? null;
+	}
+
+	getCachedGuildInfo(guildId: string) {
+		return (this.#cache.get(guildId) as GuildInfo) ?? null;
+	}
+
+	getCachedGuild(guildId: string) {
+		const guildInfo = this.getCachedGuildInfo(guildId);
+		return guildInfo?.guild ?? null;
+	}
+
+	getCachedRoleMenuList(guildId: string) {
+		const guildInfo = this.getCachedGuildInfo(guildId);
+		return guildInfo?.roleMenus ?? null;
+	}
+
+	getCachedRoleMenu(guildId: string, roleId: string) {
+		const roleMenus = this.getCachedRoleMenuList(guildId);
+		return roleMenus?.find((roleMenu) => roleMenu.id === roleId) ?? null;
+	}
+
+	clearCache() {
+		this.#cache.clear();
+	}
+
+	updateRoleMenu(copied: RoleMenu) {
+		return this.patch<RoleMenu>(`/${copied.guild}/${copied.id}`, {
+			body: copied
+		});
+	}
 }
 
-export async function apiFetchGuild(guildId: string) {
-	return (await apiFetchRoleMenuList(guildId)).guild;
-}
-
-export async function apiFetchRoleMenus(guildId: string) {
-	return (await apiFetchRoleMenuList(guildId)).roleMenus;
-}
-
-export async function apiPatchRoleMenu(roleMenuData: RoleMenuFullData) {
-	return apiPatch<RoleMenuFullData>(`/${roleMenuData.guild}/${roleMenuData.id}`, roleMenuData);
-}
+export const roleMenuAPI = new RoleMenuClient('/api');

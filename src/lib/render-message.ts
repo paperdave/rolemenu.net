@@ -1,7 +1,6 @@
-import type { MessageEditOptions } from 'discord.js';
-import type { RoleMenuFullData } from 'src/routes/api/[guild]/info';
+import type { RoleMenu } from './api-types';
 
-export function renderRoleMenuMessage(menu: RoleMenuFullData): MessageEditOptions {
+export function renderRoleMenuMessage(menu: RoleMenu) {
 	return {
 		content: `${menu.message}`,
 		components: [
@@ -11,7 +10,7 @@ export function renderRoleMenuMessage(menu: RoleMenuFullData): MessageEditOption
 					{
 						type: 3,
 						custom_id: 'role-menu',
-						placeholder: 'Select a role',
+						placeholder: menu.placeholder ?? (menu.multi ? 'Select roles' : 'Select a role'),
 						min_values: 0,
 						max_values: menu.multi ? menu.roles.length : 1,
 						options: menu.roles.map((role) => ({

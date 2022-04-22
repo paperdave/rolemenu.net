@@ -1,2 +1,11 @@
-<h1>Role Menu</h1>
-<a href="/edit"> edit your role menus </a>
+<script lang='ts'>
+  import { session } from '$app/stores';
+</script>
+
+<main>
+  <!-- -->
+</main>
+
+<style lang='scss'>
+
+</style>

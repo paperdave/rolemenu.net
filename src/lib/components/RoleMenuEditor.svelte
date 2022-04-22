@@ -1,25 +1,24 @@
 <script lang="ts">
-	import type {
-		RoleMenuFullData,
-		RoleMenuListGuild,
-		RoleMenuListGuildRole
-	} from 'src/routes/api/[guild]/role-menu-list';
+	import { roleMenuAPI } from '$lib/api-client';
+
+	import type { RoleMenu } from '$lib/api-types';
+	import type { APIGuild, APIRole } from 'discord-api-types/v10';
+
 	import copy from 'fast-copy';
 	import equals from 'fast-deep-equal';
-	import { apiPatchRoleMenu } from '$lib/api-client';
 
-	export let menu: RoleMenuFullData;
-	export let guild: RoleMenuListGuild;
+	export let menu: RoleMenu;
+	export let guild: APIGuild;
 
-	let copied: RoleMenuFullData;
+	let copied: RoleMenu;
 	function updateCopy() {
-		copied = copy(menu);
+		copied = copy({ ...menu });
 	}
 	$: menu && updateCopy();
 
 	$: changed = !equals(copied, menu);
 
-	function filterRoles(roles: RoleMenuListGuildRole[], menu: RoleMenuFullData) {
+	function filterRoles(roles: APIRole[], menu: RoleMenu) {
 		const everyone = roles.find((x) => x.position === 0);
 		const allowedPerms = BigInt(everyone.permissions);
 
@@ -32,9 +31,12 @@
 		);
 	}
 
+	$: availableRoles = filterRoles(guild.roles, copied);
+
 	async function publish() {
 		try {
-			await apiPatchRoleMenu(copied);
+			const data = await roleMenuAPI.updateRoleMenu(copied);
+			menu = data;
 		} catch (error) {
 			alert(error);
 			return;
@@ -73,17 +75,14 @@
 					const role = guild.roles.find((x) => x.id === roleId);
 
 					copied.roles = copied.roles.concat({
-						id: 'null',
 						role: role.id,
 						label: role.name,
-						description: '',
-						emoji: '',
-						roleMenuId: copied.id
+						description: ''
 					});
 				}}
 			>
 				<option value="null">ADD A ROLE</option>
-				{#each filterRoles(guild.roles, menu) as role}
+				{#each availableRoles as role}
 					<option value={role.id}>{role.name}</option>
 				{/each}
 			</select>

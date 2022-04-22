@@ -73,10 +73,8 @@ export class CacheMap<K, V> {
 			clearTimeout(this.timeout);
 		}
 	}
-	deleteAll() {
-		this.map.forEach((entry) => {
-			this.delete(entry.key);
-		});
+	clear() {
+		this.map.clear();
 	}
 	dispose() {
 		if (this.timeout) clearTimeout(this.timeout);

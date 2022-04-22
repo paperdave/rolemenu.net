@@ -1,6 +1,6 @@
 generator client {
   provider = "prisma-client-js"
-  previewFeatures = ["dataproxy", "extendedIndexes", "referentialIntegrity"]
+  previewFeatures = ["dataProxy", "extendedIndexes", "referentialIntegrity"]
 }
 
 datasource db {
@@ -23,13 +23,3 @@ model RoleMenu {
 
   @@index([guild])
 }
-
-// model RoleMenuRole {
-//   id          String @id @unique @default(uuid())
-//   role        String
-//   label       String?
-//   description String?
-//   emoji       String?
-//   roleMenu    RoleMenu @relation(fields: [roleMenuId], references: [id])
-//   roleMenuId  String
-// }

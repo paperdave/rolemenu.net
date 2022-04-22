@@ -1,37 +1,47 @@
-<script lang="ts">
-	import { page } from '$app/stores';
-	import { apiFetchRoleMenuList, roleMenuListCache } from '$lib/api-client';
-	import RoleMenuEditor from '$lib/components/RoleMenuEditor.svelte';
+<script context="module" lang="ts">
+	import type { Load } from '@sveltejs/kit';
 
-	$: guildId = $page.params.guild;
-	$: menuId = $page.params.menu;
+	export const load: Load = async ({ fetch, params, session }) => {
+		if (!session) {
+			return {
+				status: 302,
+				redirect: '/invite'
+			};
+		}
 
-	$: rmListCached = roleMenuListCache.get(guildId) as RoleMenuList;
-	$: dataPromise = (
-		rmListCached ? Promise.resolve(rmListCached) : apiFetchRoleMenuList(guildId)
-	).then((data) => {
+		const guild = await roleMenuAPI.withOtherFetch(fetch).getGuild(params.guild);
+		const menu = await roleMenuAPI.withOtherFetch(fetch).getRoleMenu(params.guild, params.menu);
+
 		return {
-			guild: data.guild,
-			menu: data.roleMenus.find((x) => x.id === menuId)
+			props: {
+				guild,
+				menu
+			}
 		};
-	});
+	};
+</script>
+
+<script lang="ts">
+	import type { RoleMenu } from '$lib/api-types';
+	import RoleMenuEditor from '$lib/components/RoleMenuEditor.svelte';
+	import type { APIGuild } from 'discord-api-types/v10';
+	import { roleMenuAPI } from '$lib/api-client';
+
+	export let guild: APIGuild;
+	export let menu: RoleMenu;
 </script>
 
 <main>
 	<p>
-		<a href="/edit/{guildId}">go back</a>
+		<a href="/edit/{guild.id}">go back</a>
 	</p>
-	{#await dataPromise}
-		...
-	{:then { menu, guild }}
-		{#if menu}
-			<h1>edit this role menu:</h1>
-			<RoleMenuEditor {menu} {guild} />
-		{:else}
-			<p>no menu found</p>
-			<p>make it with /rolemenu create</p>
-		{/if}
-	{/await}
+	{#if menu}
+		<h1>edit this role menu:</h1>
+		<RoleMenuEditor {menu} {guild} />
+	{:else}
+		<p>no menu found</p>
+		<p>make it with /rolemenu create</p>
+	{/if}
 </main>
 
 <style lang="scss">
