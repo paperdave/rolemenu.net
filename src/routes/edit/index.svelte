@@ -36,7 +36,7 @@
 					<a href="/edit/{guild.id}">{guild.name}</a>
 				{:else}
 					<span>{guild.name}</span>
-					{#if guild.hasManageServer}
+					{#if guild.hasManageGuild}
 						(<a href="/invite?guild={guild.id}">invite</a>)
 					{:else}
 						(ask owner to invite)

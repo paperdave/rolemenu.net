@@ -1,6 +1,7 @@
 import type { RoleMenu } from '$lib/api-types';
 import { db } from '$lib/db';
 import { discordRest } from '$lib/discord';
+import { hasPermission } from '$lib/permission';
 import type { RequestHandler } from '@sveltejs/kit';
 import { PermissionFlagsBits, Routes, type APIGuild } from 'discord-api-types/v10';
 
@@ -21,7 +22,7 @@ export const get: RequestHandler = async ({
 
 	if (
 		!guilds.some(
-			(x) => x.id === guildId && (BigInt(x.permissions) & PermissionFlagsBits.ManageRoles) !== 0n
+			(x) => x.id === guildId && hasPermission(x.permissions, PermissionFlagsBits.ManageRoles)
 		)
 	) {
 		return {

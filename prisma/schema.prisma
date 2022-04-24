@@ -23,3 +23,10 @@ model RoleMenu {
 
   @@index([guild])
 }
+
+model RoleMenuEmoji {
+  guild    String // guild id (50 per guild) 
+  id       String @id @unique // emoji id
+  name     String // emoji name
+  category String // emoji category
+}

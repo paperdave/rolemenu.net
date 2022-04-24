@@ -27,5 +27,5 @@ export interface RoleMenuEmoji {
 
 export type GuildPreview = RESTAPIPartialCurrentUserGuild & {
 	hasBot: boolean;
-	hasManageServer: boolean;
+	hasManageGuild: boolean;
 };

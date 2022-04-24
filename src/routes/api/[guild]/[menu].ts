@@ -10,6 +10,7 @@ import {
 	type RESTGetAPIGuildMemberResult
 } from 'discord-api-types/v10';
 import type { RoleMenu } from '$lib/api-types';
+import { hasPermission } from '$lib/permission';
 
 function validateRoleMenu(newMenu: any, against: RoleMenu) {
 	if (typeof newMenu !== 'object') return 'Not an object';
@@ -74,7 +75,7 @@ export const patch: RequestHandler = async ({
 
 	if (
 		!guilds.some(
-			(x) => x.id === guildId && (BigInt(x.permissions) & PermissionFlagsBits.ManageRoles) !== 0n
+			(x) => x.id === guildId && hasPermission(x.permissions, PermissionFlagsBits.ManageRoles)
 		)
 	) {
 		return {

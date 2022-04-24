@@ -1,5 +1,6 @@
 import type { GuildPreview } from '$lib/api-types';
 import { discordRest } from '$lib/discord';
+import { hasPermission } from '$lib/permission';
 import { pipe } from '$lib/pipe';
 import type { RequestHandler } from '@sveltejs/kit';
 import { PermissionFlagsBits, Routes, type APIGuild } from 'discord-api-types/v10';
@@ -18,7 +19,7 @@ export const get: RequestHandler = async ({ locals: { userDiscordRest } }) => {
 
 	const result = await pipe(
 		guilds,
-		(guilds) => guilds.filter((g) => BigInt(g.permissions) & PermissionFlagsBits.ManageRoles),
+		(guilds) => guilds.filter((g) => hasPermission(g.permissions, PermissionFlagsBits.ManageRoles)),
 		(guilds) =>
 			guilds.map(async (g) => {
 				const isIn = await discordRest
@@ -31,7 +32,7 @@ export const get: RequestHandler = async ({ locals: { userDiscordRest } }) => {
 					name: g.name,
 					icon: g.icon,
 					hasBot: isIn,
-					hasManageServer: (BigInt(g.permissions) & PermissionFlagsBits.ManageGuild) !== 0n
+					hasManageGuild: hasPermission(g.permissions, PermissionFlagsBits.ManageGuild)
 				};
 			}),
 		(guilds) => Promise.all(guilds),
@@ -42,9 +43,9 @@ export const get: RequestHandler = async ({ locals: { userDiscordRest } }) => {
 						return -1;
 					} else if (!a.hasBot && b.hasBot) {
 						return 1;
-					} else if (a.hasManageServer && !b.hasManageServer) {
+					} else if (a.hasManageGuild && !b.hasManageGuild) {
 						return -1;
-					} else if (!a.hasManageServer && b.hasManageServer) {
+					} else if (!a.hasManageGuild && b.hasManageGuild) {
 						return 1;
 					} else {
 						return a.name.localeCompare(b.name);
