@@ -17,12 +17,33 @@
 				/>
 			</svg>
 		</div>
-		<Selection
-			item={{ label: 'YouTube Notifications', description: 'Get a ping when a new video goes up.' }}
-		/>
+		<div class="options">
+			<Selection
+				item={{
+					label: 'YouTube Notifications',
+					description: 'Get a ping when a new video goes up.',
+					emoji: { id: '898284543730126899', name: 'davecode_green' }
+				}}
+			/>
+			<Selection
+				item={{
+					label: 'YouTube Notifications',
+					description: 'Get a ping when a new video goes up.',
+					emoji: { id: '898284543730126899', name: 'davecode_green' }
+				}}
+			/>
+			<Selection
+				item={{
+					label: 'YouTube Notifications',
+					description: 'Get a ping when a new video goes up.',
+					emoji: { id: '898284543730126899', name: 'davecode_green' }
+				}}
+			/>
+		</div>
 	</div>
 </header>
 <section>
+	<div class="blank-space" />
 	<p>
 		Role Menus are a more modern version of traditional “reaction roles” systems, allowing for
 		self-assignable roles on Discord servers. Easily customize their appearance and functionality to
@@ -45,16 +66,21 @@
 	header {
 		background-color: var(--primary);
 		padding: 1rem;
-		height: 20rem;
+		height: 25rem;
 	}
 
 	h1 {
+		margin-top: 4rem;
 		text-align: center;
 		font-size: 3rem;
 	}
 
 	$round: 0.4rem;
 	$borderSize: 0.2rem;
+
+	.blank-space {
+		height: 8rem;
+	}
 
 	.role-menu-visualizer {
 		width: 35rem;
@@ -87,5 +113,14 @@
 			margin-left: auto;
 			fill: var(--text);
 		}
+	}
+
+	.options {
+		border: $borderSize solid var(--dark-2);
+		border-top: none;
+		border-bottom-left-radius: $round;
+		border-bottom-right-radius: $round;
+		background-color: var(--bg);
+		overflow: hidden;
 	}
 </style>

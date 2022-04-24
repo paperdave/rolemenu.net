@@ -7,7 +7,10 @@
 <div class="selection">
 	{#if item.emoji}
 		<div class="icon">
-			<!--  -->
+			<img
+				src="https://cdn.discordapp.com/emojis/{item.emoji.id}.webp?size=24&quality=lossless"
+				alt=":{item.emoji.name}:"
+			/>
 		</div>
 	{/if}
 	<div class="info">
@@ -23,6 +26,22 @@
 		display: flex;
 		align-items: center;
 		padding: 1rem;
-		background: var(--background);
+		background: var(--bg);
+		gap: 1rem;
+	}
+	.label {
+		font-weight: bold;
+	}
+	.description {
+		opacity: 0.75;
+	}
+	.icon {
+		width: 1.5rem;
+		display: flex;
+		position: relative;
+
+		img {
+			width: 100%;
+		}
 	}
 </style>

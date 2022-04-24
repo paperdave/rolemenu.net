@@ -33,11 +33,37 @@ export const get: RequestHandler = async ({
 
 	const [guild, roleMenus] = await Promise.all([
 		discordRest.get(`/guilds/${guildId}`) as Promise<APIGuild>,
-		db.roleMenu.findMany({
-			where: {
-				guild: guildId
-			}
-		}) as Promise<unknown[]> as Promise<RoleMenu[]>
+		(
+			db.roleMenu.findMany({
+				where: {
+					guild: guildId
+				}
+			}) as Promise<unknown[]> as Promise<RoleMenu[]>
+		).then((menus) =>
+			Promise.all(
+				menus.map(async (menu) => {
+					const message = await discordRest
+						.get(Routes.channelMessage(menu.channel, menu.id))
+						.catch(() => null);
+
+					if (message) {
+						return menu;
+					}
+
+					db.roleMenu
+						.delete({
+							where: {
+								id: menu.id
+							}
+						})
+						.then(() => {
+							//
+						});
+
+					return null;
+				})
+			).then((menus) => menus.filter((x) => x !== null))
+		)
 	]);
 
 	return {

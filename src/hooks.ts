@@ -8,7 +8,6 @@ import {
 import { REST } from '@discordjs/rest';
 import type { GetSession, Handle } from '@sveltejs/kit';
 import { parse as parseCookie } from 'cookie';
-import { Routes, type APIUser } from 'discord-api-types/v10';
 import NodeCache from 'node-cache';
 
 interface CachedTokenRefresh {
