@@ -26,8 +26,12 @@ const config = {
 			banner: {
 				// this fixes cloudflare builds. we provide a stub class so
 				// https://github.com/ionic-team/rollup-plugin-node-polyfills/blob/master/polyfills/http-lib/capability.js#L20
-				// runs fine.
-				js: 'globalThis.XMLHttpRequest=class XMLHttpRequest{open(){}};'
+				// and some other things properly run.
+				js: [
+					'globalThis.XMLHttpRequest=class{open(){}};',
+					'globalThis.location={};',
+					'globalThis.process={version:"16, Cloudflare Workers",nextTick:(f)=>setTimeout(f)};'
+				].join('')
 			},
 			plugins: [
 				// these next three plugins are so @discord/rest compiles for the cloudflare worker.
@@ -49,8 +53,8 @@ const config = {
 					}
 				},
 				NodeModulesPolyfillPlugin()
-			],
-			minify: true
+			]
+			// minify: true
 		})
 	}
 };
