@@ -34,6 +34,8 @@
 		padding: 1rem;
 		display: flex;
 		align-items: center;
+		z-index: 100;
+		position: relative;
 
 		.content {
 			flex: 1;

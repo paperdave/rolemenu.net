@@ -1,5 +1,6 @@
 <script context="module" lang="ts">
 	import type { DisplayableRoleMenu } from '$lib/api-types';
+	import { onDestroy, onMount } from 'svelte';
 
 	import RoleMenu from './RoleMenu.svelte';
 
@@ -94,11 +95,36 @@
 </script>
 
 <script lang="ts">
-	let i = 0;
+	const THRESHOLD = 7000;
 
-	setInterval(() => {
-		i = (i + 1) % menus.length;
-	}, 8000);
+	let i = 0;
+	let running = true;
+	let timer = 0;
+	let last = 0;
+
+	function tick(now) {
+		if (!running) return;
+		if (last === 0) last = now;
+
+		const delta = now - last;
+		last = now;
+
+		timer += delta;
+
+		if (timer > THRESHOLD) {
+			timer = 0;
+			i++;
+			if (i >= menus.length) i = 0;
+		}
+
+		requestAnimationFrame(tick);
+	}
+
+	onMount(() => {
+		requestAnimationFrame(tick);
+	});
+
+	onDestroy(() => (running = false));
 </script>
 
 <RoleMenu slideshow menu={menus[i]} />

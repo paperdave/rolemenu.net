@@ -1,8 +1,6 @@
 <script lang="ts">
 	import type { RoleMenuOption } from '$lib/api-types';
 	import { getEmojiImageURL } from '$lib/emoji';
-	import { fly } from 'svelte/transition';
-	import { quadIn } from 'svelte/easing';
 
 	export let item: Pick<RoleMenuOption, 'emoji' | 'label' | 'description'>;
 	export let isLast: boolean;
@@ -14,11 +12,7 @@
 {#if slideshow}
 	<!--  -->
 	{#key item.label + item.description}
-		<div
-			class="slideshow-transform"
-			style="animation-delay:{index * 200 + delay}ms"
-			out:fly|local={{ duration: 200, x: -50, opacity: 0, easing: quadIn }}
-		>
+		<div class="slideshow-transform" style="animation-delay:{index * 200 + delay}ms">
 			<svelte:self {item} {isLast} {index} />
 		</div>
 	{/key}
