@@ -4,7 +4,7 @@
 	import RoleMenu from './RoleMenu.svelte';
 
 	// in these rolemenus, placeholder is ignored, and message is the highlighted portion of
-	// "Create simple, self-assignable menus for <TEXT>"
+	// "Create simple, self-assignable role menus for <TEXT>"
 
 	const menus: DisplayableRoleMenu[] = [
 		{
