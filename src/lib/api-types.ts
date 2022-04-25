@@ -16,7 +16,7 @@ export interface RoleMenu {
 export interface RoleMenuOption {
 	role: string;
 	label: string;
-	description: string;
+	description?: string;
 	emoji?: RoleMenuEmoji;
 }
 
@@ -29,3 +29,17 @@ export type GuildPreview = RESTAPIPartialCurrentUserGuild & {
 	hasBot: boolean;
 	hasManageGuild: boolean;
 };
+
+export interface DisplayableRoleMenu {
+	message: string;
+	placeholder?: string;
+	style: 'default';
+	roles: DisplayableRoleMenuOption[];
+	multi: boolean;
+}
+
+export interface DisplayableRoleMenuOption {
+	label: string;
+	description?: string;
+	emoji?: RoleMenuEmoji;
+}

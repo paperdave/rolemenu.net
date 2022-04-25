@@ -1,6 +1,6 @@
 <article>
 	<h1>Role Menus Privacy Policy</h1>
-	<p>Last updated on April 21st, 2020. Effective April 21st, 2020.</p>
+	<p>Last updated on April 21st, 2022. Effective April 21st, 2022.</p>
 	<p>
 		I don't like convoluted privacy policies but I tried to make this as professional as I can, and
 		document what this service does. If you are unfamiliar with what this service is, please see the <a
