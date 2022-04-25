@@ -16,6 +16,7 @@
 		"@davecode/structures": "^0.3.0",
 		"@discordjs/rest": "^0.3.0",
 		"@prisma/client": "^3.12.0",
+		"@sveltejs/adapter-cloudflare": "^1.0.0-next.18",
 		"cookie": "^0.5.0",
 		"discord-api-types": "^0.31.2",
 		"dotenv": "^16.0.0",
@@ -26,15 +27,16 @@
 		"realm-web": "^1.7.0",
 		"sass": "^1.50.1",
 		"svelte-twemoji": "^1.0.4",
-		"tweetnacl": "^1.0.3",
-		"twemoji": "^14.0.2"
+		"tweetnacl": "^1.0.3"
 	},
 	"devDependencies": {
-		"@sveltejs/adapter-auto": "^1.0.0-next.34",
+		"@esbuild-plugins/node-modules-polyfill": "^0.1.4",
 		"@sveltejs/kit": "^1.0.0-next.316",
 		"@types/cookie": "^0.5.1",
 		"@typescript-eslint/eslint-plugin": "^5.10.1",
 		"@typescript-eslint/parser": "^5.10.1",
+		"awaitable-timers": "^1.0.0",
+		"esbuild-plugin-alias": "^0.2.1",
 		"eslint": "^7.32.0",
 		"eslint-config-prettier": "^8.3.0",
 		"eslint-plugin-svelte3": "^3.2.1",
