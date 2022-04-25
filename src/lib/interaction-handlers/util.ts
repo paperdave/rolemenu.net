@@ -25,6 +25,9 @@ export function interactionResponse<X extends InteractionResponseType>(
 		body: {
 			type,
 			data
+		},
+		headers: {
+			'Cache-Control': 'no-cache'
 		}
 	};
 }

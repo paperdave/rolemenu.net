@@ -8,6 +8,7 @@ import {
 	type APIInteractionResponse
 } from 'discord-api-types/v10';
 import nacl from 'tweetnacl';
+import { Buffer } from 'buffer';
 
 type PropOrNever<O, K extends PropertyKey> = O extends Record<K, infer V> ? V : undefined;
 
@@ -38,7 +39,10 @@ export const post: RequestHandler = async ({ request }) => {
 	if (!isVerified) {
 		return {
 			status: 401,
-			body: 'Invalid signature'
+			body: 'Invalid signature',
+			headers: {
+				'Cache-Control': 'no-cache'
+			}
 		};
 	}
 
@@ -56,6 +60,9 @@ export const post: RequestHandler = async ({ request }) => {
 
 	return {
 		status: 404,
-		body: 'error'
+		body: 'error',
+		headers: {
+			'Cache-Control': 'no-cache'
+		}
 	};
 };
