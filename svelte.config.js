@@ -37,8 +37,8 @@ const config = {
 						globalThis.clearTimeout=(x)=>_clear(x && x.value || x);
 					})(setTimeout,clearTimeout);`,
 					`((_set,_clear)=>{
-						globalThis.#$setInterval=(...args)=>({unref(){},value:_set(...args)});
-						globalThis.#$clearInterval=(x)=>_clear(x && x.value || x);
+						globalThis.setInterval=(...args)=>({unref(){},value:_set(...args)});
+						globalThis.clearInterval=(x)=>_clear(x && x.value || x);
 					})(setInterval,clearInterval);`
 				].join('')
 			},
