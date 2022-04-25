@@ -31,7 +31,15 @@ const config = {
 				js: [
 					'globalThis.XMLHttpRequest=class{open(){}};',
 					'globalThis.location={};',
-					'globalThis.process={version:"16, Cloudflare Workers",nextTick:(f)=>setTimeout(f)};'
+					'globalThis.process={version:"16, Cloudflare Workers",nextTick:(f)=>setTimeout(f)};',
+					`((_set,_clear)=>{
+						globalThis.setTimeout=(...args)=>({unref(){},value:_set(...args)});
+						globalThis.clearTimeout=(x)=>_clear(x && x.value || x);
+					})(setTimeout,clearTimeout);`,
+					`((_set,_clear)=>{
+						globalThis.#$setInterval=(...args)=>({unref(){},value:_set(...args)});
+						globalThis.#$clearInterval=(x)=>_clear(x && x.value || x);
+					})(setInterval,clearInterval);`
 				].join('')
 			},
 			plugins: [
