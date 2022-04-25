@@ -21,7 +21,7 @@
 				{
 					label: 'Twitch Notifications',
 					description: 'Get a ping when the stream starts.',
-					emoji: { name: 'youtube', id: '967989211305242634' }
+					emoji: { name: 'twitch', id: '968118564118741003' }
 				},
 				{
 					label: 'Game Night',
