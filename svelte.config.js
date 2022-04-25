@@ -23,7 +23,14 @@ const config = {
 						['process.env', JSON.stringify({})]
 					])
 			),
+			banner: {
+				// this fixes cloudflare builds. we provide a stub class so
+				// https://github.com/ionic-team/rollup-plugin-node-polyfills/blob/master/polyfills/http-lib/capability.js#L20
+				// runs fine.
+				js: 'globalThis.XMLHttpRequest=class XMLHttpRequest{open(){}};'
+			},
 			plugins: [
+				// these next three plugins are so @discord/rest compiles for the cloudflare worker.
 				{
 					name: 'node-awaitable-timers',
 					setup(build) {
