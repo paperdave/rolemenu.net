@@ -3,7 +3,7 @@
 
 	export let text: string;
 
-	const firstPart = 'Create simple, self-assignable roles for';
+	const firstPart = 'Create simple, self-assignable menus for';
 
 	let isFirst = true;
 	let delay = firstPart.length * 20 + 800;
