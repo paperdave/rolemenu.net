@@ -1,6 +1,7 @@
 import adapterCloudflare from '@sveltejs/adapter-cloudflare';
 import preprocess from 'svelte-preprocess';
 import 'dotenv/config';
+import alias from 'esbuild-plugin-alias';
 import { NodeModulesPolyfillPlugin } from '@esbuild-plugins/node-modules-polyfill';
 import { createRequire } from 'module';
 
@@ -35,6 +36,9 @@ const config = {
 			},
 			plugins: [
 				// these next three plugins are so @discord/rest compiles for the cloudflare worker.
+				alias({
+					'@prisma/client': require.resolve('@prisma/client')
+				}),
 				{
 					name: 'node-awaitable-timers',
 					setup(build) {
