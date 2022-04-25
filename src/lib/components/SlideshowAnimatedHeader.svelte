@@ -27,7 +27,7 @@
 	{/each}
 	<strong class="highlighted">
 		{#key text}
-			<span out:fade|local={{ duration: 100 }}>
+			<span out:fade|local={{ duration: 150 }} class="one-line">
 				{#each text + '.' as char, i}
 					<span
 						class="char"
@@ -52,6 +52,12 @@
 	.char {
 		animation: fadeIn 0.5s linear;
 		animation-fill-mode: both;
+	}
+
+	.one-line {
+		white-space: nowrap;
+		position: absolute;
+		transform: translateX(0.3rem);
 	}
 
 	@keyframes fadeIn {
