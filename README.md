@@ -1,40 +1,6 @@
-# create-svelte
+# [Role Menus for Discord](https://rolemenu.net)
+Role Menus are a more modern version of traditional “reaction roles” systems, allowing for self-assignable roles on Discord servers. Easily customize their appearance and functionality to your liking with our web-based editor.
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+The code is structured as a SvelteKit application, and all Discord api interactions are done through `@discordjs/rest` and `discord-api-types`, with an [Interaction Endpoint](https://discord.com/developers/docs/interactions/receiving-and-responding#receiving-an-interaction) for responding to people using the underlying Select Menus. This lets us run the entire bot through [Cloudflare Pages](https://pages.cloudflare.com). The reasoning for a full-stack web application instead of just a bot is to allow server owners to fully customize their menus easily.
 
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
-
-```bash
-# create a new project in the current directory
-npm init svelte@next
-
-# create a new project in my-app
-npm init svelte@next my-app
-```
-
-> Note: the `@next` is temporary
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+For now, this bot just does the Role Menus, but it may be interesting to look at other related features such as button-based role assignment, a button to open a message with the Role Menu, and other types of interactable components like pagination for long-form text containing server rules and information. I do not plan to get these extra goals done, though I am open to contributions: Get in touch on [my server](https://discord.gg/4AbvSXV).
