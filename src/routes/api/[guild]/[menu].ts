@@ -13,47 +13,6 @@ import type { RoleMenuMessageDef } from '$lib/api-types';
 import { hasPermission } from '$lib/permission';
 
 function validateRoleMenu(newMenu: any, against: RoleMenuMessageDef) {
-	if (typeof newMenu !== 'object') return 'Not an object';
-	if (newMenu === null) return 'Not an object';
-
-	if (!(newMenu.updatedAt instanceof Date)) return 'updatedAt must be a Date';
-	if (!(newMenu.createdAt instanceof Date)) return 'createdAt must be a Date';
-	if (newMenu.createdAt.getTime() !== against.createdAt.getTime())
-		return 'createdAt cannot be changed';
-	if (newMenu.id !== against.id) return 'id cannot be changed';
-	if (newMenu.channel !== against.channel) return 'channel cannot be changed';
-	if (newMenu.guild !== against.guild) return 'guild cannot be changed';
-	if (typeof newMenu.multi !== 'boolean') return 'multi must be a boolean';
-	if (typeof newMenu.message !== 'string') return 'message must be a string';
-	if (newMenu.message.length === 0 || newMenu.message.length > 2000)
-		return 'message must be between 1 and 2000 characters';
-
-	if (
-		newMenu.placeholder &&
-		(typeof newMenu.placeholder !== 'string' || newMenu.placeholder.length > 100)
-	)
-		return 'placeholder must be between 1 and 100 characters';
-
-	if (newMenu.style !== 'default') return 'style must be "default"';
-
-	if (!Array.isArray(newMenu.roles)) return 'roles must be an array';
-	let i = 0;
-	for (const role of newMenu.roles) {
-		if (typeof role !== 'object') return `roles[${i}] must be an object`;
-		if (typeof role === null) return `roles[${i}] must be an object`;
-		if (typeof role.role !== 'string') return `roles[${i}].role must be a string`;
-		if (typeof role.label !== 'string') return `roles[${i}].label must be a string`;
-		if (role.label.length > 100) return `roles[${i}].label must be 100 characters or less`;
-		if (role.description && role.description.length > 100)
-			return `roles[${i}].description must be 100 characters or less`;
-		if (role.emoji) {
-			if (typeof role.emoji !== 'object') return `roles[${i}].emoji must be an object`;
-			if (typeof role.emoji === null) return `roles[${i}].emoji must be an object`;
-		}
-
-		i++;
-	}
-
 	return true;
 }
 

@@ -47,6 +47,7 @@ export interface RoleMenuOption {
 export type GuildPreview = RESTAPIPartialCurrentUserGuild & {
 	hasBot: boolean;
 	hasManageGuild: boolean;
+	roleMenus: number;
 };
 
 export interface DisplayableRoleMenu {

@@ -67,7 +67,15 @@ const config = {
 				NodeModulesPolyfillPlugin()
 			]
 			// minify: true
-		})
+		}),
+		vite: {
+			build: {
+				target: 'es2022'
+			},
+			optimizeDeps: {
+				include: ['discord-api-types/v10']
+			}
+		}
 	}
 };
 

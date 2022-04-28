@@ -41,7 +41,6 @@
 {/if}
 
 <style lang="scss">
-	$round: 0.6rem;
 	$borderSize: 0.2rem;
 
 	.selection {
@@ -59,8 +58,8 @@
 		}
 
 		&.last {
-			border-bottom-left-radius: $round;
-			border-bottom-right-radius: $round;
+			border-bottom-left-radius: var(--round);
+			border-bottom-right-radius: var(--round);
 		}
 	}
 

@@ -1,9 +1,15 @@
 import type { GuildPreview } from '$lib/api-types';
+import { db } from '$lib/db';
 import { discordRest } from '$lib/discord';
 import { hasPermission } from '$lib/permission';
 import { pipe } from '$lib/pipe';
 import type { RequestHandler } from '@sveltejs/kit';
-import { PermissionFlagsBits, Routes, type APIGuild } from 'discord-api-types/v10';
+import {
+	PermissionFlagsBits,
+	Routes,
+	type APIGuild,
+	type RESTGetAPIUserResult
+} from 'discord-api-types/v10';
 
 export const get: RequestHandler = async ({ locals: { userDiscordRest } }) => {
 	if (!userDiscordRest) {
@@ -16,6 +22,10 @@ export const get: RequestHandler = async ({ locals: { userDiscordRest } }) => {
 	const guilds = (await userDiscordRest.get(Routes.userGuilds(), {
 		authPrefix: 'Bearer'
 	})) as APIGuild[];
+
+	const me = (await userDiscordRest.get(Routes.user(), {
+		authPrefix: 'Bearer'
+	})) as RESTGetAPIUserResult;
 
 	const result = await pipe(
 		guilds,
@@ -32,7 +42,9 @@ export const get: RequestHandler = async ({ locals: { userDiscordRest } }) => {
 					name: g.name,
 					icon: g.icon,
 					hasBot: isIn,
-					hasManageGuild: hasPermission(g.permissions, PermissionFlagsBits.ManageGuild)
+					hasOwner: g.owner_id === me.id,
+					hasManageGuild: hasPermission(g.permissions, PermissionFlagsBits.ManageGuild),
+					roleMenus: await db.roleMenuMessage.count({ where: { guild: g.id } })
 				};
 			}),
 		(guilds) => Promise.all(guilds),

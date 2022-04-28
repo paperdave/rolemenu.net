@@ -24,13 +24,12 @@
 
 <style lang="scss">
 	$borderSize: 0.2rem;
-	$round: 0.6rem;
 
 	.selector {
 		background: var(--dark);
 		border: $borderSize solid var(--dark-2);
-		border-top-left-radius: $round;
-		border-top-right-radius: $round;
+		border-top-left-radius: var(--round);
+		border-top-right-radius: var(--round);
 		padding: 1rem;
 		display: flex;
 		align-items: center;
@@ -55,8 +54,8 @@
 
 	@keyframes border-radius-change {
 		0% {
-			border-bottom-left-radius: $round;
-			border-bottom-right-radius: $round;
+			border-bottom-left-radius: var(--round);
+			border-bottom-right-radius: var(--round);
 		}
 		100% {
 			border-bottom-left-radius: 0;

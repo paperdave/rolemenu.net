@@ -3,7 +3,13 @@ import { db } from '$lib/db';
 import { discordRest } from '$lib/discord';
 import { hasPermission } from '$lib/permission';
 import type { RequestHandler } from '@sveltejs/kit';
-import { PermissionFlagsBits, Routes, type APIGuild } from 'discord-api-types/v10';
+import {
+	PermissionFlagsBits,
+	Routes,
+	type APIGuild,
+	type APIChannel,
+	type APIPartialChannel
+} from 'discord-api-types/v10';
 
 export const get: RequestHandler = async ({
 	params: { guild: guildId },
@@ -31,8 +37,17 @@ export const get: RequestHandler = async ({
 		};
 	}
 
-	const [guild, roleMenus] = await Promise.all([
-		discordRest.get(`/guilds/${guildId}`) as Promise<APIGuild>,
+	const [guild, channels, roleMenus] = await Promise.all([
+		discordRest.get(Routes.guild(guildId)) as Promise<APIGuild>,
+		(discordRest.get(Routes.guildChannels(guildId)) as Promise<APIChannel[]>).then((channels) =>
+			channels.map((channel) => {
+				return {
+					id: channel.id,
+					name: channel.name,
+					type: channel.type
+				};
+			})
+		),
 		(
 			db.roleMenuMessage.findMany({
 				where: {
@@ -66,12 +81,19 @@ export const get: RequestHandler = async ({
 		)
 	]);
 
+	let myPermissions = 0n;
+	for (const role of guild.roles) {
+		myPermissions |= BigInt(role.permissions);
+	}
+
 	return {
 		status: 200,
 		body: {
 			data: {
 				guild,
-				roleMenus
+				roleMenus,
+				channels,
+				isAdmin: hasPermission(myPermissions, PermissionFlagsBits.Administrator)
 			}
 		}
 	};
@@ -83,5 +105,7 @@ export interface GetGuildInfo {
 
 export interface GuildInfo {
 	guild: APIGuild;
+	channels: APIPartialChannel[];
 	roleMenus: RoleMenuMessageDef[];
+	isAdmin: boolean;
 }

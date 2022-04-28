@@ -1,6 +1,26 @@
+<script context="module" lang="ts">
+	import type { Load } from '@sveltejs/kit';
+
+	export const load: Load = async ({ fetch }) => {
+		const { serverCount, roleMenuCount } = await fetch('/api/stats').then((res) => res.json());
+
+		return {
+			props: {
+				serverCount,
+				roleMenuCount
+			}
+		};
+	};
+</script>
+
 <script lang="ts">
 	import Meta from '$lib/components/Meta.svelte';
 	import RoleMenuExamples from '$lib/components/RoleMenuExamples.svelte';
+	import Button from '$lib/components/Button.svelte';
+	import { session } from '$app/stores';
+
+	export let roleMenuCount: number = 0;
+	export let serverCount: number = 0;
 </script>
 
 <Meta />
@@ -15,16 +35,23 @@
 <section>
 	<div class="blank-space" />
 	<article>
-		<p class="first-para">
+		<p class="big">
 			Role Menus are a more modern version of traditional “reaction roles” systems, allowing for
 			self-assignable roles on Discord servers. Easily customize their appearance and functionality
 			to your liking with our web-based editor.
 		</p>
+		<p class="big">
+			To date, {roleMenuCount} role menus have been created in {serverCount} servers.
+		</p>
 
 		<div class="button-row">
-			<!-- <Button href="/invite">Get Started</Button>
-			<Button href="/docs" style="link">Documentation</Button> -->
-			<br /><br /><br /><br /><br /> Coming Soon...
+			<!-- {#if session}
+				<Button href="/edit">Go to Dashboard</Button>
+			{:else}
+				<Button href="/invite">Get Started</Button>
+			{/if} -->
+			<!-- <Button href="/docs" style="link">Documentation</Button> -->
+			Coming soon...
 		</div>
 
 		<!-- <h2>How does it work?</h2>
@@ -59,8 +86,6 @@
 		font-size: 3rem;
 	}
 
-	$round: 0.6rem;
-
 	.blank-space {
 		height: 4rem;
 	}
@@ -70,10 +95,11 @@
 		margin: 0 auto;
 	}
 
-	.first-para {
+	.big {
 		font-size: 1.4rem;
 		font-weight: 400;
 		text-align: center;
+		margin-bottom: 2rem;
 	}
 
 	.button-row {
@@ -92,7 +118,7 @@
 			width: 100%;
 			aspect-ratio: 16/9;
 			border: 2px solid var(--dark-2);
-			border-radius: 0.5rem;
+			border-radius: var(--round);
 		}
 	}
 </style>

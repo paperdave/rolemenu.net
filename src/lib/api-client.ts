@@ -40,6 +40,10 @@ export class RoleMenuClient extends RESTClient {
 		return (await this.getGuildInfo(guildId)).guild;
 	}
 
+	async getGuildChannels(guildId: string) {
+		return (await this.getGuildInfo(guildId)).channels;
+	}
+
 	async getRoleMenuList(guildId: string) {
 		return (await this.getGuildInfo(guildId)).roleMenus;
 	}

@@ -29,12 +29,11 @@
 </div>
 
 <style lang="scss">
-	$round: 0.6rem;
 	$borderSize: 0.2rem;
 
 	.select-menu {
 		width: 35rem;
-		border-radius: $round;
+		border-radius: var(--round);
 		font-size: 1.1rem;
 		filter: drop-shadow(0 0.18rem 2rem rgba(0, 0, 0, 0.5));
 	}

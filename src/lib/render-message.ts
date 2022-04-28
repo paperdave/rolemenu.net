@@ -16,9 +16,11 @@ export function renderRoleMenu(menu: RMRoleMenu, idSuffix: string): APIMessageAc
 	return {
 		type: ComponentType.SelectMenu,
 		custom_id: 'action:role-menu,' + idSuffix,
-		placeholder: menu.placeholder,
+		placeholder:
+			menu.placeholder ??
+			(menu.roles.length === 0 ? '[no roles]' : menu.multi ? 'Select Roles' : 'Select Role'),
 		min_values: 0,
-		max_values: menu.multi ? menu.roles.length : 1,
+		max_values: Math.max(1, menu.multi ? menu.roles.length : 1),
 		options: (menu.roles.length > 0
 			? menu.roles
 			: [{ label: 'No roles available', role: 'null' }]
@@ -72,6 +74,8 @@ export function renderRoleMenuMessage(
 	menu: Omit<RoleMenuMessageDef, 'createdAt' | 'updatedAt'>
 ): RESTPatchAPIChannelMessageJSONBody {
 	return {
+		content: '',
+		embeds: [],
 		...menu.message,
 		components: menu.components.map((item, row) => ({
 			type: ComponentType.ActionRow,
