@@ -1,6 +1,6 @@
 <script context="module" lang="ts">
 	import type { Load } from '@sveltejs/kit';
-	import type { RoleMenu } from '$lib/api-types';
+	import type { RoleMenuMessageDef } from '$lib/api-types';
 	import type { APIGuild } from 'discord-api-types/v10';
 	import { roleMenuAPI } from '$lib/api-client';
 
@@ -25,7 +25,7 @@
 
 <script lang="ts">
 	export let guild: APIGuild;
-	export let roleMenus: RoleMenu[];
+	export let roleMenus: RoleMenuMessageDef[];
 </script>
 
 <main>

@@ -10,9 +10,9 @@
 <div class="selector" class:slideshow>
 	<div class="content">
 		{#if slideshow}
-			<SlideshowAnimatedHeader text={menu.message} bind:selectionDelay />
+			<SlideshowAnimatedHeader text={menu.placeholder} bind:selectionDelay />
 		{:else}
-			<h2>{menu.message}</h2>
+			<h2>{menu.placeholder}</h2>
 		{/if}
 	</div>
 	<svg viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg">

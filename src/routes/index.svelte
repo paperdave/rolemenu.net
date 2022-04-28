@@ -1,8 +1,9 @@
 <script lang="ts">
-	import Button from '$lib/components/Button.svelte';
-	import RoleMenu from '$lib/components/RoleMenu.svelte';
+	import Meta from '$lib/components/Meta.svelte';
 	import RoleMenuExamples from '$lib/components/RoleMenuExamples.svelte';
 </script>
+
+<Meta />
 
 <header>
 	<h1>Role Menus for Discord</h1>
@@ -71,7 +72,7 @@
 
 	.first-para {
 		font-size: 1.4rem;
-		font-weight: 500;
+		font-weight: 400;
 		text-align: center;
 	}
 

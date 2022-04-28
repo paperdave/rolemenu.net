@@ -1,28 +1,47 @@
-import type { RESTAPIPartialCurrentUserGuild } from 'discord-api-types/v10';
+import type {
+	APIButtonComponentWithCustomId,
+	APIMessageComponentEmoji,
+	RESTAPIPartialCurrentUserGuild,
+	RESTPatchAPIChannelMessageJSONBody
+} from 'discord-api-types/v10';
 
-export interface RoleMenu {
+export interface RoleMenuMessageDef {
 	id: string;
-	createdAt: Date;
-	updatedAt: Date;
 	channel: string;
 	guild: string;
+	createdAt: Date;
+	updatedAt: Date;
+	message: Omit<RESTPatchAPIChannelMessageJSONBody, 'components'>;
+	components: RMComponentType[][];
+}
+
+export type RMComponentType = RMRoleMenu | RMRoleButton | RMLinkButton;
+
+export interface RMRoleMenu {
+	type: 'role-menu';
 	placeholder?: string;
 	multi: boolean;
-	message: string;
-	style: 'default';
 	roles: RoleMenuOption[];
+}
+
+export interface RMRoleButton {
+	type: 'role-button';
+	role: string;
+	button: Omit<APIButtonComponentWithCustomId, 'custom_id'>;
+}
+
+export interface RMLinkButton {
+	type: 'link';
+	label: string;
+	url: string;
+	emoji?: APIMessageComponentEmoji;
 }
 
 export interface RoleMenuOption {
 	role: string;
 	label: string;
 	description?: string;
-	emoji?: RoleMenuEmoji;
-}
-
-export interface RoleMenuEmoji {
-	id: string;
-	name: string;
+	emoji?: APIMessageComponentEmoji;
 }
 
 export type GuildPreview = RESTAPIPartialCurrentUserGuild & {
@@ -31,15 +50,13 @@ export type GuildPreview = RESTAPIPartialCurrentUserGuild & {
 };
 
 export interface DisplayableRoleMenu {
-	message: string;
-	placeholder?: string;
-	style: 'default';
+	placeholder: string;
 	roles: DisplayableRoleMenuOption[];
-	multi: boolean;
+	multi?: boolean;
 }
 
 export interface DisplayableRoleMenuOption {
 	label: string;
 	description?: string;
-	emoji?: RoleMenuEmoji;
+	emoji?: APIMessageComponentEmoji;
 }

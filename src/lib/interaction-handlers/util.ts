@@ -16,10 +16,10 @@ export function getCommandSubcommand(i: APIApplicationCommandInteraction) {
 
 type PropOrNever<O, K extends PropertyKey> = O extends Record<K, infer V> ? V : undefined;
 
-export function interactionResponse<X extends InteractionResponseType>(
-	type: X,
-	data: PropOrNever<Extract<APIInteractionResponse, { type: X }>, 'data'>
-) {
+export function interactionResponse<
+	X extends InteractionResponseType,
+	Y = PropOrNever<Extract<APIInteractionResponse, { type: X }>, 'data'>
+>(type: X, data: Y) {
 	return {
 		status: 200,
 		body: {

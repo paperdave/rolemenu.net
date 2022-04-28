@@ -22,13 +22,13 @@
 </script>
 
 <script lang="ts">
-	import type { RoleMenu } from '$lib/api-types';
+	import type { RoleMenuMessageDef } from '$lib/api-types';
 	import RoleMenuEditor from '$lib/components/RoleMenuEditor.svelte';
 	import type { APIGuild } from 'discord-api-types/v10';
 	import { roleMenuAPI } from '$lib/api-client';
 
 	export let guild: APIGuild;
-	export let menu: RoleMenu;
+	export let menu: RoleMenuMessageDef;
 </script>
 
 <main>

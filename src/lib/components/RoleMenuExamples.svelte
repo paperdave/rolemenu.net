@@ -9,10 +9,7 @@
 
 	const menus: DisplayableRoleMenu[] = [
 		{
-			message: 'notifications',
-			placeholder: '',
-			style: 'default',
-			multi: true,
+			placeholder: 'notifications',
 			roles: [
 				{
 					label: 'YouTube Notifications',
@@ -32,10 +29,7 @@
 			]
 		},
 		{
-			message: 'channel access',
-			placeholder: '',
-			style: 'default',
-			multi: true,
+			placeholder: 'channel access',
 			roles: [
 				{
 					label: 'Cooking',
@@ -55,10 +49,7 @@
 			]
 		},
 		{
-			message: 'user tags',
-			placeholder: '',
-			style: 'default',
-			multi: true,
+			placeholder: 'user tags',
 			roles: [
 				{
 					label: 'Artist',
@@ -79,10 +70,7 @@
 			]
 		},
 		{
-			message: 'pronouns',
-			placeholder: '',
-			style: 'default',
-			multi: false,
+			placeholder: 'pronouns',
 			roles: [
 				//
 				{ label: 'she/her' },

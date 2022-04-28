@@ -1,4 +1,4 @@
-import type { RoleMenu } from '$lib/api-types';
+import type { RoleMenuMessageDef } from '$lib/api-types';
 import { db } from '$lib/db';
 import { discordRest } from '$lib/discord';
 import { hasPermission } from '$lib/permission';
@@ -34,11 +34,11 @@ export const get: RequestHandler = async ({
 	const [guild, roleMenus] = await Promise.all([
 		discordRest.get(`/guilds/${guildId}`) as Promise<APIGuild>,
 		(
-			db.roleMenu.findMany({
+			db.roleMenuMessage.findMany({
 				where: {
 					guild: guildId
 				}
-			}) as Promise<unknown[]> as Promise<RoleMenu[]>
+			}) as Promise<unknown[]> as Promise<RoleMenuMessageDef[]>
 		).then((menus) =>
 			Promise.all(
 				menus.map(async (menu) => {
@@ -50,7 +50,7 @@ export const get: RequestHandler = async ({
 						return menu;
 					}
 
-					db.roleMenu
+					db.roleMenuMessage
 						.delete({
 							where: {
 								id: menu.id
@@ -71,10 +71,7 @@ export const get: RequestHandler = async ({
 		body: {
 			data: {
 				guild,
-				roleMenus: roleMenus.map((menu) => ({
-					...menu,
-					roles: menu.roles ?? []
-				}))
+				roleMenus
 			}
 		}
 	};
@@ -86,5 +83,5 @@ export interface GetGuildInfo {
 
 export interface GuildInfo {
 	guild: APIGuild;
-	roleMenus: RoleMenu[];
+	roleMenus: RoleMenuMessageDef[];
 }

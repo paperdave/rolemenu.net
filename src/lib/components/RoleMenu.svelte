@@ -13,7 +13,7 @@
 
 <div class="select-menu">
 	<SelectHeader {slideshow} {menu} bind:selectionDelay />
-	{#key slideshow && menu.message}
+	{#key slideshow && menu.placeholder}
 		<div out:fly|local={{ duration: 400, y: -50, opacity: 0, easing: cubicIn }}>
 			{#each menu.roles as option, i}
 				<Selection

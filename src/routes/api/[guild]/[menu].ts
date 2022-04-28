@@ -9,10 +9,10 @@ import {
 	type APIUser,
 	type RESTGetAPIGuildMemberResult
 } from 'discord-api-types/v10';
-import type { RoleMenu } from '$lib/api-types';
+import type { RoleMenuMessageDef } from '$lib/api-types';
 import { hasPermission } from '$lib/permission';
 
-function validateRoleMenu(newMenu: any, against: RoleMenu) {
+function validateRoleMenu(newMenu: any, against: RoleMenuMessageDef) {
 	if (typeof newMenu !== 'object') return 'Not an object';
 	if (newMenu === null) return 'Not an object';
 
@@ -88,12 +88,12 @@ export const patch: RequestHandler = async ({
 	data.updatedAt = new Date(data.updatedAt);
 	data.createdAt = new Date(data.createdAt);
 
-	const existing = (await db.roleMenu.findFirst({
+	const existing = (await db.roleMenuMessage.findFirst({
 		where: {
 			id: menuId,
 			guild: guildId
 		}
-	})) as unknown as RoleMenu;
+	})) as unknown as RoleMenuMessageDef;
 
 	if (!existing) {
 		return {
@@ -131,7 +131,7 @@ export const patch: RequestHandler = async ({
 		body: rendered
 	});
 
-	await db.roleMenu.update({
+	await db.roleMenuMessage.update({
 		where: {
 			id: menuId
 		},

@@ -9,24 +9,14 @@ datasource db {
   referentialIntegrity = "prisma"
 }
 
-model RoleMenu {
+model RoleMenuMessage {
   id          String @id @unique // message id
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   channel     String
   guild       String
-  placeholder String? 
-  multi       Boolean  @default(false)
-  message     String @default("Role Menu")
-  style       String @default("default") 
-  roles       Json @default("[]")
+  message     Json
+  components  Json
 
   @@index([guild])
-}
-
-model RoleMenuEmoji {
-  guild    String // guild id (50 per guild) 
-  id       String @id @unique // emoji id
-  name     String // emoji name
-  category String // emoji category
 }

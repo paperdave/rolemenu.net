@@ -2,7 +2,7 @@ import { browser } from '$app/env';
 import type { GetUserGuilds } from 'src/routes/api/user/guilds';
 import type { GetGuildInfo, GuildInfo } from 'src/routes/api/[guild]/info';
 import { RESTClient } from './api-client-base';
-import type { RoleMenu, GuildPreview } from './api-types';
+import type { RoleMenuMessageDef, GuildPreview } from './api-types';
 import { CacheMap } from './cache-map';
 
 const globalCache = new CacheMap<string, unknown>();
@@ -75,8 +75,8 @@ export class RoleMenuClient extends RESTClient {
 		this.#cache.clear();
 	}
 
-	updateRoleMenu(copied: RoleMenu) {
-		return this.patch<RoleMenu>(`/${copied.guild}/${copied.id}`, {
+	updateRoleMenu(copied: RoleMenuMessageDef) {
+		return this.patch<RoleMenuMessageDef>(`/${copied.guild}/${copied.id}`, {
 			body: copied
 		});
 	}

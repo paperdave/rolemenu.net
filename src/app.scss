@@ -1,42 +1,31 @@
 // I hate font licensing; Ideally we would be using Whitney, but i'm not out to pay $200+ for it
 // This one looks really similar but isnt exact, but close enough.
 @font-face {
-	font-family: 'ROUTE 159';
-	src: url(/fonts/route159-regular.otf);
-	font-weight: normal;
+	font-family: 'IBM Plex Sans';
+	src: url(/fonts/IBMPlexSans-Regular.ttf);
+	font-weight: 400;
 }
-
 @font-face {
-	font-family: 'ROUTE 159';
-	src: url(/fonts/route159-italic.otf);
-	font-weight: normal;
+	font-family: 'IBM Plex Sans';
+	src: url(/fonts/IBMPlexSans-Italic.ttf);
+	font-weight: 400;
 	font-style: italic;
 }
-
 @font-face {
-	font-family: 'ROUTE 159';
-	src: url(/fonts/route159-bold.otf);
-	font-weight: bold;
+	font-family: 'IBM Plex Sans';
+	src: url(/fonts/IBMPlexSans-SemiBold.ttf);
+	font-weight: 700;
 }
-
 @font-face {
-	font-family: 'ROUTE 159';
-	src: url(/fonts/route159-bolditalic.otf);
-	font-weight: bold;
+	font-family: 'IBM Plex Sans';
+	src: url(/fonts/IBMPlexSans-SemiBoldItalic.ttf);
+	font-weight: 700;
 	font-style: italic;
 }
-
 @font-face {
-	font-family: 'ROUTE 159';
-	src: url(/fonts/route159-semibold.otf);
-	font-weight: 600;
-}
-
-@font-face {
-	font-family: 'ROUTE 159';
-	src: url(/fonts/route159-semibolditalic.otf);
-	font-weight: 600;
-	font-style: italic;
+	font-family: 'Open Sauce One';
+	src: url(/fonts/OpenSauceOne-Bold.ttf);
+	font-weight: 700;
 }
 
 :root {
@@ -56,13 +45,12 @@
 body {
 	margin: 0;
 	padding: 0;
-	font-family: 'Roboto', sans-serif;
+	font-family: 'IBM Plex Sans', sans-serif;
 	color: var(--text);
 	background-color: var(--bg);
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh;
-	font-family: Whitney, 'ROUTE 159', sans-serif;
 }
 
 a {

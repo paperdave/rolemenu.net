@@ -1,9 +1,10 @@
-import type { RoleMenu } from '$lib/api-types';
+import type { RoleMenuMessageDef } from '$lib/api-types';
 import { db } from '$lib/db';
 import { discordRest } from '$lib/discord';
 import { HOST } from '$lib/env';
 import { hasPermission } from '$lib/permission';
 import { renderRoleMenuMessage } from '$lib/render-message';
+import type { RoleMenuMessage } from '@prisma/client';
 import {
 	ApplicationCommandType,
 	ButtonStyle,
@@ -45,16 +46,33 @@ export async function handleRoleMenuCreate(i: APIInteraction) {
 		} as RESTPostAPIChannelMessageJSONBody
 	})) as APIMessage;
 
-	const menu = (await db.roleMenu.create({
-		data: {
-			id: message.id,
-			channel: i.channel_id,
-			guild: i.guild_id
-		}
-	})) as unknown as RoleMenu;
+	const data: Omit<RoleMenuMessageDef, 'createdAt' | 'updatedAt'> = {
+		id: message.id,
+		channel: i.channel_id,
+		guild: i.guild_id,
+		message: {
+			embeds: [
+				{
+					title: 'New Role Menu',
+					description: 'Select roles below you would like to assign to yourself.'
+				}
+			]
+		},
+		components: [
+			[
+				{
+					type: 'role-menu',
+					multi: true,
+					roles: []
+				}
+			]
+		]
+	};
+
+	const menu = await db.roleMenuMessage.create({ data: data as unknown as RoleMenuMessage });
 
 	await discordRest.patch(Routes.channelMessage(i.channel_id, message.id), {
-		body: renderRoleMenuMessage(menu)
+		body: renderRoleMenuMessage(data)
 	});
 
 	return interactionResponse(InteractionResponseType.ChannelMessageWithSource, {
