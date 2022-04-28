@@ -53,6 +53,13 @@ body {
 	min-height: 100vh;
 }
 
+h1,
+h2,
+h3 {
+	font-family: 'Open Sauce One', sans-serif;
+	font-weight: 700;
+}
+
 a {
 	color: var(--light);
 	text-decoration-color: hsla(0, 0%, 100%, 0.4);
