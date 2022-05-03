@@ -45,20 +45,18 @@
 		</p>
 
 		<div class="button-row">
-			<!-- {#if session}
+			{#if $session}
 				<Button href="/edit">Go to Dashboard</Button>
 			{:else}
-				<Button href="/invite">Get Started</Button>
-			{/if} -->
-			<!-- <Button href="/docs" style="link">Documentation</Button> -->
-			Coming soon...
+				<Button href="/login">Get Started</Button>
+			{/if}
 		</div>
 
 		<!-- <h2>How does it work?</h2>
 		<div class="explainer-video-embed">
 			<iframe
 				title="YouTube video player"
-				src="https://www.youtube-nocookie.com/embed/TJ13BA3-NR4"
+				src="https://www.youtube-nocookie.com/embed/"
 				frameborder="0"
 				allow="encrypted-media"
 				allowfullscreen

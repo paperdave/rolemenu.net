@@ -2,7 +2,11 @@
 </script>
 
 <main>
-	<span class="item wordmark"> Role Menus for Discord </span>
+	<span class="item wordmark">Role Menus for Discord</span>
+	<span class="spacer" />
+	<span>
+		<a href="/api/logout">Logout</a>
+	</span>
 </main>
 
 <style lang="scss">
@@ -14,5 +18,8 @@
 		display: flex;
 		align-items: center;
 		padding: 2rem;
+	}
+	.spacer {
+		flex: 1;
 	}
 </style>

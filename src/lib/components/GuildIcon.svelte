@@ -2,9 +2,10 @@
 	import type { APIGuild } from 'discord-api-types/v10';
 
 	export let guild: Pick<APIGuild, 'id' | 'icon' | 'name'>;
+	export let selected = false;
 </script>
 
-<main>
+<main class:selected>
 	{#if guild.icon}
 		<img
 			src="https://cdn.discordapp.com/icons/{guild.id}/{guild.icon}.{guild.icon.startsWith('a_')
@@ -31,6 +32,11 @@
 		justify-content: center;
 		align-items: center;
 		overflow: hidden;
+		border-radius: 50%;
+		transition: border-radius 0.2s ease-in-out;
+	}
+
+	.selected {
 		border-radius: 0.85rem;
 	}
 

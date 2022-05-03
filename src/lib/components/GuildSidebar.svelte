@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { browser } from '$app/env';
+	import { page } from '$app/stores';
 
 	import { roleMenuAPI } from '$lib/api-client';
 	import { neverResolving } from '$lib/never-resolve';
@@ -22,7 +23,11 @@
 	{:then guilds}
 		{#each guilds.filter((guild) => guild.hasBot) as guild}
 			<a href="/edit/{guild.id}" class="icon">
-				<GuildIcon {guild} />
+				<GuildIcon {guild} selected={$page.params.guild === guild.id} />
+
+				{#if $page.params.guild === guild.id}
+					<div class="dot" />
+				{/if}
 			</a>
 		{/each}
 	{/await}
@@ -33,9 +38,23 @@
 		display: flex;
 		flex-direction: column;
 		width: 6rem;
-		gap: 1.5rem;
+		flex: 0 0 6rem;
+		gap: 1rem;
 		padding: 1.1rem;
 		background-color: var(--dark);
+	}
+	.icon {
+		position: relative;
+	}
+	.dot {
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		left: -1.3rem;
+		width: 0.5rem;
+		height: 2rem;
+		background-color: white;
+		border-radius: 0.25rem;
 	}
 	.home {
 		width: 100%;

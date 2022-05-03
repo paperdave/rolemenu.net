@@ -6,11 +6,12 @@
 
 	import copy from 'fast-copy';
 	import equals from 'fast-deep-equal';
+	import DiscordMessage from './DiscordMessage.svelte';
 
-	export let menu: RMRoleMenu;
+	export let menu: RoleMenuMessageDef;
 	export let guild: APIGuild;
 
-	let copied: RMRoleMenu;
+	let copied: RoleMenuMessageDef;
 	function updateCopy() {
 		copied = copy({ ...menu });
 	}
@@ -31,10 +32,15 @@
 		);
 	}
 
-	$: availableRoles = filterRoles(guild.roles, copied);
+	// $: availableRoles = filterRoles(guild.roles, copied);
 </script>
 
-<main />
+<main>
+	<span>
+		{JSON.stringify(menu)}
+	</span>
+	<DiscordMessage message={copied.message} />
+</main>
 
 <style lang="scss">
 </style>

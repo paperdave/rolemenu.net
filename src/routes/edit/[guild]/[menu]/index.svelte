@@ -26,23 +26,32 @@
 	import RoleMenuEditor from '$lib/components/RoleMenuEditor.svelte';
 	import type { APIGuild } from 'discord-api-types/v10';
 	import { roleMenuAPI } from '$lib/api-client';
+	import { browser } from '$app/env';
 
 	export let guild: APIGuild;
 	export let menu: RoleMenuMessageDef;
 </script>
 
 <main>
-	<p>
-		<a href="/edit/{guild.id}">go back</a>
-	</p>
 	{#if menu}
-		<h1>edit this role menu:</h1>
-		<RoleMenuEditor {menu} {guild} />
+		{#if browser}
+			<RoleMenuEditor {guild} {menu} />
+		{/if}
 	{:else}
-		<p>no menu found</p>
-		<p>make it with /rolemenu create</p>
+		<h1>Error: Role Menu Not Found</h1>
+		<p>
+			<a href="/edit/{guild.id}">Go Back</a>
+		</p>
 	{/if}
 </main>
 
 <style lang="scss">
+	h1 {
+		margin: 0;
+	}
+	main {
+		padding: 2rem;
+		display: flex;
+		flex-direction: column;
+	}
 </style>
