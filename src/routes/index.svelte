@@ -1,16 +1,5 @@
 <script context="module" lang="ts">
 	import type { Load } from '@sveltejs/kit';
-
-	export const load: Load = async ({ fetch }) => {
-		const { serverCount, roleMenuCount } = await fetch('/api/stats').then((res) => res.json());
-
-		return {
-			props: {
-				serverCount,
-				roleMenuCount
-			}
-		};
-	};
 </script>
 
 <script lang="ts">

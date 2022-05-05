@@ -1,29 +1,9 @@
 <script context="module" lang="ts">
-	import { roleMenuAPI } from '$lib/api-client';
-
-	export const load: Load = async ({ fetch, session }) => {
-		if (!session) {
-			return {
-				status: 302,
-				redirect: '/invite'
-			};
-		}
-
-		const guildList = await roleMenuAPI.withOtherFetch(fetch).getUserGuilds();
-
-		return {
-			props: {
-				guildList
-			}
-		};
-	};
 </script>
 
 <script lang="ts">
-	import type { Load } from '@sveltejs/kit';
 	import type { GuildPreview } from '$lib/api-types';
 	import GuildIcon from '$lib/components/GuildIcon.svelte';
-	import Header from '$lib/components/Header.svelte';
 
 	export let guildList: GuildPreview[];
 </script>

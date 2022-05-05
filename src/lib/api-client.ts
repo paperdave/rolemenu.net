@@ -1,6 +1,6 @@
 import { browser } from '$app/env';
 import type { GetUserGuilds } from 'src/routes/api/user/guilds';
-import type { GetGuildInfo, GuildInfo } from 'src/routes/api/[guild]/info';
+import type { GetGuildInfo, GuildInfo } from 'src/routes/edit';
 import { RESTClient } from './api-client-base';
 import type { RoleMenuMessageDef, GuildPreview } from './api-types';
 import { CacheMap } from './cache-map';
