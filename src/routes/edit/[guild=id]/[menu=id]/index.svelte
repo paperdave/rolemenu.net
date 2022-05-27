@@ -32,7 +32,7 @@
 	export let menu: RoleMenuMessageDef;
 </script>
 
-<main>
+<section>
 	{#if menu}
 		{#if browser}
 			<RoleMenuEditor {guild} {menu} />
@@ -43,13 +43,13 @@
 			<a href="/edit/{guild.id}">Go Back</a>
 		</p>
 	{/if}
-</main>
+</section>
 
 <style lang="scss">
 	h1 {
 		margin: 0;
 	}
-	main {
+	section {
 		padding: 2rem;
 		display: flex;
 		flex-direction: column;

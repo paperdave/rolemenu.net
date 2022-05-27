@@ -2,13 +2,13 @@
 	import GuildSidebar from '$lib/components/GuildSidebar.svelte';
 </script>
 
-<main>
+<div>
 	<GuildSidebar />
 	<slot />
-</main>
+</div>
 
 <style lang="scss">
-	main {
+	div {
 		display: flex;
 		flex: 1;
 	}

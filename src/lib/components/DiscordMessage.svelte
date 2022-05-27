@@ -5,7 +5,7 @@
 	export let message: Pick<APIMessage, 'content' | 'embeds' | 'components'>;
 </script>
 
-<main>
+<div class="root">
 	{#if message.content}
 		<div class="content">
 			{message.content}
@@ -73,10 +73,10 @@
 			{/each}
 		</div>
 	{/each}
-</main>
+</div>
 
 <style lang="scss">
-	main {
+	.root {
 		display: flex;
 		flex-direction: column;
 		font-size: 14px;

@@ -9,7 +9,7 @@
 	let guildsPromise = browser ? roleMenuAPI.getUserGuilds() : neverResolving;
 </script>
 
-<main>
+<div class="root">
 	<a href="/edit" class="home">
 		<svg viewBox="0 0 13 14" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path
@@ -31,10 +31,10 @@
 			</a>
 		{/each}
 	{/await}
-</main>
+</div>
 
 <style lang="scss">
-	main {
+	.root {
 		display: flex;
 		flex-direction: column;
 		width: 6rem;

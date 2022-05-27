@@ -39,8 +39,7 @@ export const DISCORD_REDIRECT_URI = `${HOST}/api/callback`;
 export const SCOPES = ['identify', 'guilds'];
 export const SCOPES_BOT = [...SCOPES, 'bot', 'applications.commands'];
 export const PERMISSIONS =
-	PermissionFlagsBits.Administrator +
-	PermissionFlagsBits.ManageRoles +
-	PermissionFlagsBits.SendMessages;
+	// PermissionFlagsBits.Administrator +
+	PermissionFlagsBits.ManageRoles + PermissionFlagsBits.SendMessages;
 
 export const SUPPORT_URL = `https://discord.gg/4AbvSXV`;

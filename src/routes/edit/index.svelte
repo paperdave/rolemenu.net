@@ -1,4 +1,22 @@
 <script context="module" lang="ts">
+	import { roleMenuAPI } from '$lib/api-client';
+
+	export const load: Load = async ({ fetch, session }) => {
+		if (!session) {
+			return {
+				status: 302,
+				redirect: '/invite'
+			};
+		}
+
+		const guildList = await roleMenuAPI.withOtherFetch(fetch).getUserGuilds();
+
+		return {
+			props: {
+				guildList
+			}
+		};
+	};
 </script>
 
 <script lang="ts">
@@ -8,7 +26,7 @@
 	export let guildList: GuildPreview[];
 </script>
 
-<main>
+<section>
 	<h1>
 		Your Servers
 		<span
@@ -84,7 +102,7 @@
 			</svelte:element>
 		{/each}
 	</div>
-</main>
+</section>
 
 <style lang="scss">
 	h1 {

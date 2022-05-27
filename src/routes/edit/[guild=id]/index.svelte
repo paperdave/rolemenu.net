@@ -51,7 +51,7 @@
 	$: expanded = sorted.map(() => true);
 </script>
 
-<main>
+<section>
 	<h1>{guild.name}</h1>
 
 	{#if !isAdmin}
@@ -96,14 +96,14 @@
 			{/if}
 		{/each}
 	{/if}
-</main>
+</section>
 
 <style lang="scss">
 	h1 {
 		font-size: 2.5rem;
 		margin: 0;
 	}
-	main {
+	section {
 		display: flex;
 		flex-direction: column;
 		padding: 2rem;
